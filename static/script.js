@@ -17,6 +17,9 @@ socket.on('chat-message' , message => {
 socket.on('user-connected' , name => {
     appendingMessage(name + ' connected' , 'other')
 })
+socket.on('user-disconnected' , name => {
+    appendingMessage(name + ' has disconnected' , 'other')
+})
 
 messageInput.addEventListener('input' , ()=>{
     if(messageInput.value)

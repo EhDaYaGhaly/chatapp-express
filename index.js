@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
   });
   socket.on("disconnect", () => {
     console.log(`${socket.username} has disconnected`);
-    socket.broadcast.emit(`${socket.username} has disconnected`);
+    socket.broadcast.emit('user-disconnected',socket.username);
   });
 
   socket.on("send-chat-message", (message) => {
