@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/css/selectRoom.css" />
+
+    <title>Select Room</title>
+  </head>
+  <body>
+   <form id="roomform">
+    <input type="text" id = 'roomID' placeholder="Enter Room ID">
+    <button id="joinButton" type="submit">Join Room</button>
+   </form>
+   <script>
+    
+    document.getElementById('roomform').addEventListener('submit',(event)=>{
+      event.preventDefault();
+      const roomID = document.getElementById('roomID').value
+      
+      if(roomID){
+        window.location.href = '/room/'+roomID
+      }
+    })
+   </script>
+  </body>
+</html>

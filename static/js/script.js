@@ -55,3 +55,5 @@ function appendingMessage(msg , classname) {
     messageContainer.append(message)
     message.classList.add(classname);
 }
+const roomName = window.location.pathname.split("/").pop();
+document.getElementById('roomName').innerText = `Room ID :${roomName}`
