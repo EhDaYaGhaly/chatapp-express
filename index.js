@@ -10,31 +10,36 @@ const io = new Server(server);
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 
-
-
-
 app.get("/", (req, res) => {
-  
-  res.send('Hello ?')
-  
+  res.send('Hello ?') 
 });
+
+
+
 app.get('/room/:id' ,(req,res)=>{
   res.sendFile(join(__dirname,'index.html'))
 })
+
+
+
 let guestcounter = 0;
 io.on("connection", (socket) => {
-  socket.on("new-user", (name) => {
+  socket.on("join-room", (room ,name) => {
     socket.username = name? name : `Guest #${++guestcounter}`
-    socket.broadcast.emit("user-connected", socket.username);
-    console.log(`${socket.username} is connected`);
+    socket.join(room)
+    socket.to(room).emit("user-connected", socket.username);
+    console.log(`${socket.username} is connected to room ${room}`);
   });
   socket.on("disconnect", () => {
     console.log(`${socket.username} has disconnected`);
-    socket.broadcast.emit('user-disconnected',socket.username);
+    io.emit('user-disconnected',socket.username);
   });
   
-  socket.on("send-chat-message", (message) => {
-    socket.broadcast.emit("chat-message", `${socket.username}: ${message}`);
+
+
+
+  socket.on("send-chat-message", (room ,message) => {
+    socket.to(room).emit("chat-message", `${socket.username}: ${message}`);
     console.log("message", message);
   });
 });
@@ -58,7 +63,7 @@ app.use((err, req, res, next) => {
   
 });
 server.listen(3002, () => {
-  console.log("server running at http://localhost:3002");
+  console.log("server running at http://localhost:3002/room");
 });
 
 
