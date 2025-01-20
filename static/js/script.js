@@ -3,10 +3,10 @@ const messageInput = document.getElementById("input-field");
 const sendBtn = document.getElementById("send-button");
 const messageContainer = document.getElementById("message-container");
 const roomName = window.location.pathname.split("/").pop();
-const nickname = prompt("Name ?");
 
 document.getElementById("roomName").innerText = `Room ID :${roomName}`;
-
+const nickname = document.cookie.split(`; username=`)[1];
+// console.log(document.cookie.split(`; username=`)[1])
 appendingMessage("You Joined", "mine");
 
 // socket.emit('new-user' ,nickname)
