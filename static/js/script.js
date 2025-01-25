@@ -15,10 +15,10 @@ socket.on("chat-message", (message) => {
   appendingMessage(message, "other");
 });
 
-socket.on("user-connected", (name) => {
+socket.on("user-connected"||'user-room-connected', (name) => {
   appendingMessage(name + " connected", "other");
 });
-socket.on("user-disconnected", (name) => {
+socket.on("user-disconnected"||'user', (name) => {
   appendingMessage(name + " has disconnected", "other");
 });
 
@@ -36,7 +36,7 @@ messageForm.addEventListener("submit", (e) => {
   const message = messageInput.value;
   e.preventDefault();
   if (message) {
-    socket.emit("send-chat-message", roomName, message);
+    socket.emit("send-room-message", roomName, message);
     appendingMessage(message, "mine");
     messageInput.value = "";
   }
