@@ -20,7 +20,7 @@ body{
     overflow-y: auto;
 }
 .message-form{
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
@@ -92,4 +92,10 @@ body{
     height: 1px;
     padding: 4px;
     margin-left: 15%;
+}
+.chat-selector{
+    text-align: center;
+}
+.selected{
+    background-color: rgb(241, 181, 160);
 }

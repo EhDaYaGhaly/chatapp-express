@@ -3,6 +3,7 @@ const messageInput = document.getElementById("input-field");
 const sendBtn = document.getElementById("send-button");
 const messageContainer = document.getElementById("message-container");
 const NicknameForm = document.getElementById("nickname-form");
+const chatSelector = document.getElementById("chat-selector");
 let nickname = "";
 const chatpage = document.getElementById("chat-page");
 chatpage.style.display = "none";
@@ -27,7 +28,7 @@ socket.on("online-users", (users) => {
     if (user.userID !== socket.id) {
       friendsList.innerHTML += `
       <li>
-        <div class="friend" id="${user.userID}">
+        <div class="friend ${user.userID === selecteduser? 'selected':''}" id="${user.userID}">
           <div class="friend-info" onclick="userOnClickHander('${user.userID}')">
             <div id ='username' class = 'username'>${user.username}<div id='unread'></div></div>
               <p class="online">Online</p>
@@ -96,11 +97,21 @@ function appendingMessage(msg, classname) {
 
 
 function userOnClickHander(userID) {
+  const previouslySelected = document.querySelector('.friend.selected');
+  if (previouslySelected) {
+    previouslySelected.classList.remove('selected');
+  }
   selecteduser =userID;
+  chatSelector.style.display = 'none';
+  messageForm.style.display = 'flex';
   const senderDOM = document.getElementById(userID);
+  senderDOM.classList.add('selected');
   senderDOM.querySelector('#unread').style.display = 'none';
   senderDOM.querySelector('#username').style.fontWeight = 'normal';
   messageContainer.innerHTML = "";
+  if(!messageStore[userID]){
+    messageStore[userID] = []
+  }
   messageStore[userID].forEach((msg) => {
     appendingMessage(msg.message, msg.sender);
   });
